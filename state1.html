@@ -1,0 +1,11 @@
+
+    <div>
+    	<div ng-class='{error: isError, warning: isWarning}'>{{messageText}}</div>
+    	 <button ng-click='showWarning()'>Simulate Warning</button>
+         <div>{{"zhangsan"|filter1}}</div>
+         <ul >
+        <li ng-repeat="friend in friends| orderBy:'age'">{{friend.name|filter1}}</li>
+      
+    </ul>
+
+    </div>
