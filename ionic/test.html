@@ -33,15 +33,33 @@
             </div>
         </div>
         <div class="row">
-
             <ion-refresher pulling-text="refreshing" on-refresh="doRefresh()"></ion-refresher>
             <div class="col">
-            	<ion-list>
-                <ion-item ng-repeat="todo in todos">{{todo.name}}</ion-item>
-            </ion-list>
+                <ion-list>
+                    <ion-item ng-repeat="todo in todos">{{todo.name}}</ion-item>
+                </ion-list>
             </div>
-            
         </div>
+        <!--  <ion-checkbox ng-model="item.checked" ng-repeat="item in devList" ng-checked="item.checked">{{item.text}}</ion-checkbox> -->
+        <ion-toggle ng-model="item.checked" ng-repeat="item in devList" ng-checked="item.checked">{{item.text}}</ion-toggle>
+        <div class="item">
+            <pre ng-bind="devList | json"></pre>
+        </div>
+        <button on-tap="getChecked()" class="button button-darked">getChecked</button>
+        <ion-list ng-controller="MyControl" >
+            <ion-item ng-repeat="item in divList" item="item"
+                  href="#/item/{{item.id}}" class="item-remove-animate">
+         		 Item {{ item.text }}
+                 
+                <ion-option-button class="button-assertive" ng-click="edit(item)">
+                    Edit
+                </ion-option-button>
+                <ion-option-button class="button-calm" ng-click="share(item)">
+                    Share
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+        
     </ion-content>
 </body>
 
