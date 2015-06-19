@@ -1,0 +1,79 @@
+<html>
+<head>
+	<script type="text/javascript" src="./js/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		f1().then(f2).then(f3);
+		f5().success(function(data){
+			console.log("success"+data);
+		}).faild(function(data){
+			console.log("failed"+data);
+		})
+		$.when(f1(),f2()).then(function(f1Res,f2Res){
+			console.log("f1,f2 success"+f1Res+"--"+f2Res);
+		},function faild(f1res,f2res){
+			console.log("f1,f2 faild"+f1res+"--"+f2res);
+		})
+	})
+	function f1(){
+		
+		var deffer=$.Deferred();
+		var promise=deffer.promise();
+		
+		setTimeout(function(){
+			console.log("timeout 111");
+			deffer.resolve("111");
+		},1000)
+		return promise
+	}
+	function f2(){
+		var deffer=$.Deferred();
+		
+		setTimeout(function(){
+			console.log("f2 runSuccess");
+			deffer.resolve("88899");
+		}, 500)
+		return deffer.promise();
+	}
+	function f3(arg){
+		console.log("f3 run"+arg);
+	}
+	function f5(){
+		var obj=new Object;
+		var deffer=$.Deferred();
+		var promise=deffer.promise();
+		promise.success=function(callback){
+			
+			
+			promise.then(function(successData){
+				
+				callback.apply(null,[successData])
+			});
+			
+			return promise;
+
+		}
+		promise.faild=function(callback){
+
+			promise.then(null,function(rejectData){
+				callback.apply(null,[rejectData]);
+			});
+			
+			return promise;
+			
+		}
+		setTimeout(function(){
+				deffer.reject("reject1111");
+			}, 3000)
+		setTimeout(function(){
+				deffer.resolve("resolve222");
+			}, 3002)
+		return promise;
+	}
+</script>
+</head>
+<title>异步</title>
+<body>
+	
+</body>
+</html>

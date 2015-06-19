@@ -1,0 +1,89 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+	<title>11</title>
+	<style type="text/css">
+.main{
+	
+	background-color: yellow;
+	min-width: 600px;
+	min-height: 600px;
+	padding: 0 200px;
+}
+
+.left{
+	width:200px;
+	float:left;
+	background-color: red;
+	min-height: 400px;
+	margin-left:-200px;
+}
+.middle{
+	min-height: 400px;
+	background-color:blue;
+	
+}
+.right{
+	float:right;
+	width:200px;
+	min-height: 400px;
+	background-color: black;
+	margin-right: -200px;
+	
+}
+.clear{
+	height: 0px;
+	width:0px;
+	clear:both;
+}
+
+
+       #main {min-height:600px;background:#FEFF0A;padding:0 300px;}
+       #main-left { width:300px;min-height:400px; margin-left:-300px;float:left;background:#98FF1A;}
+       #main-center {min-height:400px;background:#8E8DCC;}
+       #main-right {min-height:400px; width:300px; margin-right:-300px; float:right;background:#7CC0FF;}
+       .clear {clear:both; height:0; line-height:0; font-size:0;}
+
+</style>
+
+
+
+<body>
+	<div class="main">
+		<div class="left"></div>
+		
+		<div class="middle"></div>
+		<div class="right"></div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div id="main">
+    <div id="main-left"></div>
+    <div id="main-right"></div>
+    <div id="main-center"></div>
+    <div class="clear"></div>
+</div>
+<style>
+	#nav ul{
+		text-align: center;
+	}
+	ul >li{
+		list-style-type: none;
+		border:1px solid;
+		display:inline;
+	}
+</style>
+<div id="nav">
+	<ul>
+		<li><a href="#">link</a></li>
+		<li><a href="#">link</a></li>
+		<li><a href="#">link</a></li>
+		<li><a href="#">link</a></li>
+		<li><a href="#">link</a></li>
+	</ul>
+</div>
+
+</body>
+
+</html>
