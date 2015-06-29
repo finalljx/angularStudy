@@ -1,8 +1,10 @@
 <html>
+
 <head>
-	<script type="text/javascript" src="./js/jquery-1.11.3.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
+    <script type="text/javascript" src="./js/jquery-1.11.3.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        /*
 		f1().then(f2).then(f3);
 		f5().success(function(data){
 			console.log("success"+data);
@@ -14,66 +16,124 @@
 		},function faild(f1res,f2res){
 			console.log("f1,f2 faild"+f1res+"--"+f2res);
 		})
-	})
-	function f1(){
-		
-		var deffer=$.Deferred();
-		var promise=deffer.promise();
-		
-		setTimeout(function(){
-			console.log("timeout 111");
-			deffer.resolve("111");
-		},1000)
-		return promise
-	}
-	function f2(){
-		var deffer=$.Deferred();
-		
-		setTimeout(function(){
-			console.log("f2 runSuccess");
-			deffer.resolve("88899");
-		}, 500)
-		return deffer.promise();
-	}
-	function f3(arg){
-		console.log("f3 run"+arg);
-	}
-	function f5(){
-		var obj=new Object;
-		var deffer=$.Deferred();
-		var promise=deffer.promise();
-		promise.success=function(callback){
-			
-			
-			promise.then(function(successData){
-				
-				callback.apply(null,[successData])
-			});
-			
-			return promise;
+        
+		*/
 
-		}
-		promise.faild=function(callback){
+        var q = new Queue();
+        var span = $("#span1");
+        q.queue(function() {
+                console.log("1");
 
-			promise.then(null,function(rejectData){
-				callback.apply(null,[rejectData]);
-			});
-			
-			return promise;
-			
-		}
-		setTimeout(function(){
-				deffer.reject("reject1111");
-			}, 3000)
-		setTimeout(function(){
-				deffer.resolve("resolve222");
-			}, 3002)
-		return promise;
-	}
-</script>
+            }).wait(1000)
+            .queue(function() {
+                console.log("2");
+            }).wait(1000)
+            .queue(function() {
+                console.log("3");
+            }).dequeue()
+
+    })
+
+    function f1() {
+
+        var deffer = $.Deferred();
+        var promise = deffer.promise();
+
+        setTimeout(function() {
+            console.log("timeout 111");
+            deffer.resolve("111");
+        }, 1000)
+        return promise
+    }
+
+    function f2() {
+        var deffer = $.Deferred();
+
+        setTimeout(function() {
+            console.log("f2 runSuccess");
+            deffer.resolve("88899");
+        }, 500)
+        return deffer.promise();
+    }
+
+    function f3(arg) {
+        console.log("f3 run" + arg);
+    }
+
+    function f5() {
+        var obj = new Object;
+        var deffer = $.Deferred();
+        var promise = deffer.promise();
+        promise.success = function(callback) {
+
+
+            promise.then(function(successData) {
+
+                callback.apply(null, [successData])
+            });
+
+            return promise;
+
+        }
+        promise.faild = function(callback) {
+
+            promise.then(null, function(rejectData) {
+                callback.apply(null, [rejectData]);
+            });
+
+            return promise;
+
+        }
+        setTimeout(function() {
+            deffer.reject("reject1111");
+        }, 3000)
+        setTimeout(function() {
+            deffer.resolve("resolve222");
+        }, 3002)
+        return promise;
+    }
+
+
+    var Queue = function() {
+        this.list = [];
+    }
+    Queue.prototype = {
+        constructor: Queue,
+        queue: function(fn) {
+            this.list.push(fn);
+            return this;
+        },
+        wait: function(times) {
+            this.list.push(times);
+            return this;
+        },
+        dequeue: function() {
+            var self = this;
+            var list = self.list;
+            var fn = this.list.shift();
+            if (typeof(fn) == "number") {
+                setTimeout(function() {
+                    if (list.legth) {
+                        self.dequeue();
+                    }
+                }, fn)
+            }
+            if (typeof(fn) == "function") {
+                fn.call(this);
+                if (list.legth) {
+                    self.dequeue();
+                }
+            }
+
+        }
+
+    }
+    </script>
 </head>
 <title>异步</title>
+
 <body>
-	
+    <span id="span1"></span>
 </body>
+
 </html>

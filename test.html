@@ -2,6 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 	<title>11</title>
+	<script type="text/javascript" src="./js/jquery-1.11.3.js"></script>
 	<style type="text/css">
 .main{
 	
@@ -45,7 +46,142 @@
        .clear {clear:both; height:0; line-height:0; font-size:0;}
 
 </style>
+<script type="text/javascript">
+	var Q={
+		arrQue:[],
+		q:function(para){
+			Q.arrQue.push(para);
+			return Q;
+		},
+		d:function(){
+			var s=Q.arrQue.shift();
+			if (!s) return;
+			if(typeof(s)=="function"){
+				s();
+				Q.d();
+			}
+			if(typeof(s)=="number"){
+				setTimeout(function(){
+					Q.d();
+				},s)
+			}
+		}
+	}
+	var obj=new Object();
+	obj.promiseQue=new Array
+	obj.eventQueue=new Array;
+	obj.allResult=true;
 
+	obj.setInit=function(cb){
+		if (typeof(cb)=="function"){
+			this.promiseQue.push(cb);
+		}
+		
+	}
+//自定义事件
+obj.on=function(eventName,eventHandler){
+	var eventObj=new Object;
+	eventObj.name=eventName;
+	eventObj.handle=eventHandler;
+
+	obj.eventQueue.push(eventObj);
+}
+obj.trigger=function(eventName,data){
+	var eventObj=new Object;
+	for(var i=0;i<obj.eventQueue.length;i++){
+		eventObj=obj.eventQueue[i];
+		if(eventObj.name==eventName){
+			var aArguments=[].slice.apply(arguments);
+			var paraArguments=aArguments.splice(0,1);
+			eventObj.handle.apply(this,aArguments);
+		}
+	}
+}
+obj.f1=function(){
+	var self=this;
+	if(self.promiseQue.length){
+		var cb1=self.promiseQue.shift();
+		if(typeof(cb1)=="function"){
+			try{
+				cb1();
+				obj.allResult=obj.allResult&true;
+			}catch(e){
+				obj.allResult=obj.allResult&false;
+				console.log(e.message);
+				
+			};
+		}
+		setTimeout(function(){
+			self.f1();
+		},10);
+		return ;
+	}
+	if(self.promiseQue.length==0){
+		obj.trigger("all Done");
+	}
+}
+obj.on("all Done",function(){
+	console.log("all Function eval done");
+	console.log(obj.allResult);
+
+})
+
+
+obj.setInit(function(){
+	console.log("11");
+	// throw {"message":"here an error11"};
+});
+obj.setInit(function(){console.log("22")});
+
+var promise=function(){
+	this.queue=new Array();
+		this.then=function(cbFunction){
+		this.queue.push(arguments);
+		return this;
+	}
+}
+
+var deffer=Object();
+$.extend(true,deffer,obj);
+
+deffer.promise=function(){
+	return deffer.p= new promise();
+}
+deffer.resolve=function(data){
+	deffer.trigger("onResolve",data);
+}
+deffer.reject=function(data){
+	deffer.trigger("onReject",data);
+}
+deffer.on("onResolve",function(data){
+	var thenQueue=deffer.p.queue;
+	while(thenQueue.length>0){
+		var cb=thenQueue.shift();		
+			cb[0](data);
+	}
+	
+});
+deffer.on("onReject",function(data){
+	var thenQueue=deffer.p.queue;
+	while(thenQueue.length>0){
+		var cb=thenQueue.shift();		
+			cb[1](data);
+	}
+});
+function test(){
+	var p1=deffer.promise();
+	p1.then(function(data){
+		console.log("success"+data);
+	}
+		,function(data){
+			console.log("error"+data);
+		}).then(function(anotherData){
+			console.log("success anotherData");
+		})
+	deffer.resolve("123123");
+	// deffer.reject("aaaa");
+}
+</script>
 
 
 <body>
