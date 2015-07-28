@@ -1,0 +1,78 @@
+html{
+	font-size: 88px;
+}
+@font-face{
+	font-family: "iconfont";
+	src:url("./font/iconfont-full.ttf") format("truetype");
+}
+
+.ui-icon,[class^="ui-icon-"]{
+	font-family: "iconfont" !important;
+	font-size: 32px;
+	color:rgba(0,0,0,0.5);
+	line-height: 44px;
+}
+
+.ui-icon-close:before{
+	content:"\e60c";
+	color: #3636EA;
+}
+
+body,div,dl,dt,header,footer,section,ul,ol,li,h1,
+h2,
+h3,
+h4,
+h5,
+h6,form,nav,article,aside,menu,button{
+	margin:0px;
+	padding: 0px;
+}
+
+body{
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: "Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+}
+.ui-header,.ui-footer{
+	position: fixed;
+	z-index: 100;
+	width:100%;
+	left:0;
+}
+.ui-header{
+	height: 45px;
+	line-height: 45px;
+	color: white;
+	background-color: #18b4ed;
+}
+.ui-footer{
+	bottom: 0px;
+	height: 45px;
+}
+.ui-footer-btn{
+	color:#00a5e0;
+	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f9f9f9), to(#e0e0e0));
+}
+.ui-button{
+	
+	
+	background-image:-webkit-gradient(linear, left top,left bottom,color-stop(0.6 ,white),to(#fafafa));
+	-webkit-appearance:none;
+	background: none;
+	height: 30px;
+	min-width: 55px;
+}
+
+.ui-flex,.ui-titled{
+	display: -webkit-box;
+	-webkit-box-sizing:border-box;
+	height: 100%;
+	width:100%;
+}
+.ui-titled li{
+	-webkit-box-flex:1;
+	width:100%;
+	display: -webkit-box;
+	-webkit-box-align:center;
+	-webkit-box-pack:center;
+}
