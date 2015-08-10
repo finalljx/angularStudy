@@ -282,3 +282,20 @@ body{
 	border-radius: 100px;
 	background-image: url(http://7xilik.com5.z0.glb.qiniucdn.com/public/v150/img/index/dfuture-bg.jpg);
 }
+.ui-reddot{
+	position: relative;
+	display: inline-block;
+}
+.ui-reddot:after{
+	content: "";
+	position: absolute;
+	height:8px;
+	width:8px;
+	top:-3px;
+	right:-3px;
+	border-radius: 5px;
+	background-color: red;
+	background-clip: padding-box;
+}
+
+
